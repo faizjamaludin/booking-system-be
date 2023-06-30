@@ -13,9 +13,10 @@ app.use(express.json());
 app.use(cors());
 
 // Set variable
-// var usersRouter = require("./src/Routes/users.routes");
-// var listingRouter = require("./src/Routes/listing.routes");
-// var commentRouter = require("./src/Routes/comment.routes");
+var usersRouter = require("./src/Routes/user.routes");
+var productRouter = require('./src/Routes/product.routes')
+var bookingRouter = require('./src/Routes/booking.routes')
+
 var PORT = process.env.PORT;
 var PASS_MONGODB = process.env.PASSWORD_MONGODB;
 
@@ -32,9 +33,10 @@ mongoose
   });
 
 //   Mount Routes
-// app.use("/users", usersRouter);
-// app.use("/listing", listingRouter);
-// app.use("/comment", commentRouter);
+app.use("/users", usersRouter);
+app.use("/product", productRouter);
+app.use("/booking", bookingRouter);
+
 
 // Start server
 app.listen(PORT, () => {
