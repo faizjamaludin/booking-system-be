@@ -46,6 +46,32 @@ const createBooking = (data, res) => {
 
 }
 
+const getBooking = async (data) => {
+    const booking = await Booking.findOne({ key: data })
+
+    bookingData = {
+        name: booking.name,
+        phone: booking.phone,
+        bookingDate: booking.bookingDate,
+        status: booking.status
+    }
+
+    // console.log(bookingData)
+
+    return bookingData;
+
+
+}
+
+const getAllBooking = async () => {
+    const booking = await Booking.find();
+
+    // console.log(booking);
+    return booking;
+}
+
 module.exports = {
     createBooking,
+    getBooking,
+    getAllBooking
 };
