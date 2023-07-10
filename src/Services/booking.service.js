@@ -18,11 +18,11 @@ const createBooking = (data, res) => {
     phone: data.phone,
     bookingDate: data.booking,
     address: data.address,
-    key: data.key,
+    bookingKey: data.bookingKey,
   });
 
   if (booking.save()) {
-    const msg = "your key is " + data.key;
+    const msg = "your key is " + data.bookingKey;
 
     const mailOptions = {
       from: "faiz.jamaludin02@gmail.com",
@@ -45,13 +45,14 @@ const createBooking = (data, res) => {
 };
 
 const getBooking = async (data) => {
-  const booking = await Booking.findOne({ key: data });
+  const booking = await Booking.findOne({ bookingKey: data });
 
   bookingData = {
     name: booking.name,
     phone: booking.phone,
     bookingDate: booking.bookingDate,
     status: booking.status,
+    reason: booking.reason,
   };
 
   // console.log(bookingData)
@@ -66,8 +67,27 @@ const getAllBooking = async () => {
   return booking;
 };
 
+const acceptBooking = async (data) => {
+  const id = data.params.id;
+  const reason = data.body.reason;
+
+  if (reason) {
+    const booking = await Booking.findByIdAndUpdate(id, {
+      status: "Reject",
+      reason: data.body.reason,
+    });
+    return booking;
+  } else {
+    const booking = await Booking.findByIdAndUpdate(id, {
+      status: "Accept",
+    });
+    return booking;
+  }
+};
+
 module.exports = {
   createBooking,
   getBooking,
   getAllBooking,
+  acceptBooking,
 };
