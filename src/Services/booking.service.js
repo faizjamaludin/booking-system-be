@@ -1,4 +1,5 @@
 const Booking = require("../Models/bookingModel");
+const WorkProgress = require("../Models/workProgressModel");
 const nodemailer = require("nodemailer");
 
 // create transporter auth to send an email
@@ -12,6 +13,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const createBooking = (data, res) => {
+  console.log(data);
   const booking = new Booking({
     name: data.name,
     email: data.email,
@@ -61,7 +63,7 @@ const getBooking = async (data) => {
 };
 
 const getAllBooking = async () => {
-  const booking = await Booking.find();
+  const booking = await Booking.find().sort({ bookingDate: 1 });
 
   // console.log(booking);
   return booking;
@@ -69,20 +71,48 @@ const getAllBooking = async () => {
 
 const acceptBooking = async (data) => {
   const id = data.params.id;
-  const reason = data.body.reason;
+  // const reason = data.body.reason;
+  const newData = data.body;
+  const bookingDate = data.body.bookingDate;
 
-  if (reason) {
+  console.log(newData);
+
+  if (newData.reason) {
     const booking = await Booking.findByIdAndUpdate(id, {
       status: "Reject",
       reason: data.body.reason,
     });
     return booking;
-  } else {
+  }
+
+  if (newData.status === "Accept") {
     const booking = await Booking.findByIdAndUpdate(id, {
-      status: "Accept",
+      bookingDate: newData.bookingDate,
+      status: newData.status,
     });
+
+    const workProgress = new WorkProgress({
+      booking: id,
+      startDate: bookingDate,
+    });
+
+    workProgress.save();
+
     return booking;
   }
+
+  const booking = await Booking.findByIdAndUpdate(id, {
+    status: "Accept",
+  });
+
+  const workProgress = new WorkProgress({
+    booking: id,
+    startDate: bookingDate,
+  });
+
+  workProgress.save();
+
+  return booking;
 };
 
 module.exports = {

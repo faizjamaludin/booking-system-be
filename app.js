@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 // Set variable
-var usersRouter = require("./src/Routes/user.routes");
+var userRouter = require("./src/Routes/user.routes");
 var productRouter = require("./src/Routes/product.routes");
 var bookingRouter = require("./src/Routes/booking.routes");
 var workProgressRouter = require("./src/Routes/workprogress.routes");
@@ -34,7 +34,7 @@ mongoose
   });
 
 //   Mount Routes
-app.use("/users", usersRouter);
+app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/booking", bookingRouter);
 app.use("/work", workProgressRouter);

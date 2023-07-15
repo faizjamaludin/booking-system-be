@@ -27,20 +27,26 @@ const capitalizeWords = (str) => {
 
 // register user
 const createUser = async (userData, next) => {
-  bcrypt.hash(userData.password, saltRounds, (err, hash) => {
-    if (err) {
-      return next(err);
-    } else {
+  const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+
+  if (userData.password !== userData.cpassword) {
+    console.log("not match");
+  }
+
+  if (userData.password === userData.cpassword) {
+    try {
       const user = new User({
-        full_name: capitalizeWords(userData.fullName),
-        username: userData.username,
+        fullName: capitalizeWords(userData.fullName),
         email: userData.email,
-        password: hash,
+        phone: userData.phone,
+        password: hashedPassword,
       });
 
       user.save();
+    } catch (error) {
+      console.log(error);
     }
-  });
+  }
 };
 
 const loginUser = async (userData, next) => {

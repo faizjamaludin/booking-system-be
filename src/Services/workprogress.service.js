@@ -1,10 +1,14 @@
 const WorkProgress = require("../Models/workProgressModel");
 const nodemailer = require("nodemailer");
 
-const createWork = (data) => {
-  const workProgress = new WorkProgress();
+const getWork = async () => {
+  const workProgress = await WorkProgress.find()
+    .populate("booking")
+    .sort({ startDate: 1 });
+
+  return workProgress;
 };
 
 module.exports = {
-  createWork,
+  getWork,
 };

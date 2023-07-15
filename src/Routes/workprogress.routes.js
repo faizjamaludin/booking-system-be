@@ -2,6 +2,6 @@ const express = require("express");
 const router = express.Router();
 const workProgress = require("../Controllers/workprogress.controller");
 
-router.post("/", workProgress.createWork); // create new booking in product details
+router.get("/all", workProgress.getWork); // create new booking in product details
 
 module.exports = router;

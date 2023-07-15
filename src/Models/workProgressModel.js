@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
+const Booking = require("./bookingModel");
 
 const workProgressSchema = new mongoose.Schema({
-  bookingId: String,
+  booking: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Booking",
+  },
   workStatus: {
     type: String,
     default: "In Progress",
