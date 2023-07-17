@@ -29,10 +29,6 @@ const capitalizeWords = (str) => {
 const createUser = async (userData, next) => {
   const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
 
-  if (userData.password !== userData.cpassword) {
-    console.log("not match");
-  }
-
   if (userData.password === userData.cpassword) {
     try {
       const user = new User({
@@ -53,9 +49,9 @@ const loginUser = async (userData, next) => {
   const user = await User.findOne({ email: userData.email });
 
   if (!user) {
-    const err = new Error("Invalid email or password");
+    const err = "Invalid email or password";
     // err.status = 401;
-    return next(err);
+    return err;
   }
 
   const isMatch = await bcrypt.compare(userData.password, user.password);
