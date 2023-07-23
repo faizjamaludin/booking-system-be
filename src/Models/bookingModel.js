@@ -8,6 +8,7 @@ const bookingSchema = new mongoose.Schema({
   bookingDoneDate: Date,
   address: String,
   bookingKey: String,
+  productName: String,
   status: {
     type: String,
     default: "Pending",

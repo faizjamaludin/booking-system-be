@@ -21,6 +21,7 @@ const createBooking = (data, res) => {
     bookingDate: data.booking,
     address: data.address,
     bookingKey: data.bookingKey,
+    productName: data.productName,
   });
 
   if (booking.save()) {

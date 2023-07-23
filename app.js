@@ -11,7 +11,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/assets", express.static("Assets"));
+app.use(express.static("assets"));
 
 // Set variable
 var userRouter = require("./src/Routes/user.routes");
