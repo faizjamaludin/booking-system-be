@@ -18,6 +18,7 @@ var userRouter = require("./src/Routes/user.routes");
 var productRouter = require("./src/Routes/product.routes");
 var bookingRouter = require("./src/Routes/booking.routes");
 var workProgressRouter = require("./src/Routes/workprogress.routes");
+var dashboardRouter = require("./src/Routes/dahboard.routes");
 
 var PORT = process.env.PORT;
 var PASS_MONGODB = process.env.PASSWORD_MONGODB;
@@ -39,6 +40,7 @@ app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/booking", bookingRouter);
 app.use("/work", workProgressRouter);
+app.use("/dashboard", dashboardRouter);
 
 // Start server
 app.listen(PORT, () => {

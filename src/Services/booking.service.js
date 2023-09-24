@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 });
 
 const createBooking = (data, res) => {
-  console.log(data);
   const booking = new Booking({
     name: data.name,
     email: data.email,
@@ -40,7 +39,6 @@ const createBooking = (data, res) => {
         console.error(error);
         res.sendStatus(500);
       } else {
-        console.log("Email sent: " + info.response);
         res.sendStatus(200);
       }
     });
@@ -58,25 +56,19 @@ const getBooking = async (data) => {
     reason: booking.reason,
   };
 
-  // console.log(bookingData)
-
   return bookingData;
 };
 
 const getAllBooking = async () => {
   const booking = await Booking.find().sort({ bookingDate: 1 });
 
-  // console.log(booking);
   return booking;
 };
 
 const acceptBooking = async (data) => {
   const id = data.params.id;
-  // const reason = data.body.reason;
   const newData = data.body;
   const bookingDate = data.body.bookingDate;
-
-  console.log(newData);
 
   if (newData.reason) {
     const booking = await Booking.findByIdAndUpdate(id, {
@@ -116,9 +108,32 @@ const acceptBooking = async (data) => {
   return booking;
 };
 
+const getUserBooking = async (data) => {
+  const userEmail = data.params.email;
+  const bookingArray = [];
+
+  const booking = await Booking.find({ email: userEmail });
+
+  // set booking id for how many user booking
+  for (let i = 0; i < booking.length; i++) {
+    bookingData = {
+      name: booking[i].name,
+      phone: booking[i].phone,
+      bookingDate: booking[i].bookingDate,
+      status: booking[i].status,
+      reason: booking[i].reason,
+    };
+
+    bookingArray.push(bookingData);
+  }
+
+  return bookingArray;
+};
+
 module.exports = {
   createBooking,
   getBooking,
   getAllBooking,
   acceptBooking,
+  getUserBooking,
 };

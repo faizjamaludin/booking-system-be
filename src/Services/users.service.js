@@ -65,7 +65,9 @@ const loginUser = async (userData, next) => {
   data = {
     userId: user._id,
     email: user.email,
-    name: user.full_name,
+    name: user.fullName,
+    phone: user.phone,
+    dateCreated: user.dateCreated,
   };
 
   const token = jwt.sign(data, process.env.SECRET_KEY, { expiresIn: "1h" });

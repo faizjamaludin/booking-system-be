@@ -25,7 +25,6 @@ const createUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const { user, token } = await userService.loginUser(req.query, next);
-    console.log(req.query);
     res.status(200).json({ user, token });
   } catch (err) {
     res.status(401).json({ message: "Invalid email or password" });
