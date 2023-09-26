@@ -119,6 +119,7 @@ const getUserBooking = async (data) => {
     bookingData = {
       name: booking[i].name,
       phone: booking[i].phone,
+      email: booking[i].email,
       bookingDate: booking[i].bookingDate,
       status: booking[i].status,
       reason: booking[i].reason,
